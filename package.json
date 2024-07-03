@@ -1,0 +1,35 @@
+{
+  "name": "employee-tracker-sql",
+  "version": "1.0.0",
+  "description": "Simple employee tracker",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericroys-school/employee-tracker-sql.git"
+  },
+  "keywords": [
+    "employee",
+    "tracker",
+    "node",
+    "sql",
+    "command",
+    "line",
+    "postgres"
+  ],
+  "author": "Eric Roys",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/ericroys-school/employee-tracker-sql/issues"
+  },
+  "homepage": "https://github.com/ericroys-school/employee-tracker-sql#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "inquirer": "^9.3.2",
+    "node": "^20.15.0",
+    "pg": "^8.12.0"
+  }
+}
