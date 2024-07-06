@@ -1,3 +1,4 @@
+import { department } from "../model/department.js";
 
 const DEPT_ADD = 'Add a Department';
 const DEPT_DEL = 'Delete a Department';
@@ -68,8 +69,10 @@ export const QUESTIONS =
             validate: (value) => 
                 value.length < 1 ? "Invalid Department Name" : true,
         },
-        action: (response) => {console.log(`${response.deptName ? "" : "Not "}Adding ${response.deptName} to the database`);
-         response.deptName = null},
+        action: (response) => {
+            console.log(`${response.deptName ? "" : "Not "}Adding ${response.deptName} to the database`);
+            department.create(response.deptName);
+            response.deptName = null},
         next: 1
     },
     5: {

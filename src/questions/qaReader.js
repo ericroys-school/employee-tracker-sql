@@ -35,7 +35,7 @@ export async function getAnswers() {
         // console.log("incrementing")
         i++;
     }
-    console.log(response)
+    //console.log(response)
 }
   return response;
 }
