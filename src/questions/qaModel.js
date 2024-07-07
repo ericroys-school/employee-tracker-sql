@@ -1,4 +1,5 @@
 import { department } from "../model/department.js";
+import { color } from "../util/color.js";
 
 const DEPT_ADD = 'Add a Department';
 const DEPT_DEL = 'Delete a Department';
@@ -40,9 +41,9 @@ export const QUESTIONS =
         condition: ()=> true,
         question:
         {
-            type:'list',
+            type: 'list',
             name: 'mainChoice',
-            message: 'Main Menu',
+            message: '\n\nMain Menu',
             choices: menOpts
         },
         action: null,
@@ -51,13 +52,29 @@ export const QUESTIONS =
     2: {
         condition: (response) => response.mainChoice === DEPT_ALL,
         question: null,
-        action:()=>{console.log("Printed some stuff ---Dept view all")},
+        action: ()=>{
+            department.getAll().then(res => department.print(DEPT_ALL, res)).catch(err => console.error(err));
+        },
         next: 1
     },
     3: {
         condition: (response) => response.mainChoice === DEPT_DEL,
-        question: null,
-        action:()=>{console.log("Printed some stuff --- department delete")},
+        question: {
+            message: "Which Department to delete? ",
+            type: 'list',
+            choices: department.getNames,
+            name: 'deptName'
+        },
+        action:(response)=>{
+            if(!response.deptName || response.deptName === '--none--'){
+             color.warn("no delete action to perform")
+            }
+            else{
+                console.log(`Deleting ${response.deptName} from the database`)
+                department.delete(response.deptName);
+                response.deptName = null
+            }
+        },
         next: 1
     },
     4: {
@@ -72,7 +89,8 @@ export const QUESTIONS =
         action: (response) => {
             console.log(`${response.deptName ? "" : "Not "}Adding ${response.deptName} to the database`);
             department.create(response.deptName);
-            response.deptName = null},
+            response.deptName = null
+        },
         next: 1
     },
     5: {

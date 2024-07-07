@@ -7,6 +7,7 @@ import { QUESTIONS } from "./qaModel.js";
  * @returns {} answers to the questions
  */
 export async function getAnswers() {
+  console.log('\x1b[33m Welcome to the app! \x1b[0m');
   let len = Object.keys(QUESTIONS).length;
   let response = {};
 
