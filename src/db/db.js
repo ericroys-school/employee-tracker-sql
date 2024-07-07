@@ -2,6 +2,7 @@ import pg from "pg";
 const { Pool } = pg;
 import "dotenv/config";
 
+
 const pool = new Pool(
   {
     user: process.env.PG_USER,
@@ -34,6 +35,8 @@ export async function query(statement) {
     if (client) client.release();
     console.error(err);
     throw err;
+  } finally{
+    if(client) client.release();
   }
 }
 
@@ -48,10 +51,14 @@ export async function execute(query) {
     let client;
     try {
       client = await connect();
-      client.query(query, function (err, { rows }) {
-        console.log(err ? "Error: " + err : "No error");
-          return rows;
-      });
+
+      return client.query(query);
+    //   const res = client.query(query, function (err, res) {
+    //       console.log(err ? "Error: " + err : "No error");
+    //       //print(res, null);
+    //       r = res;
+    //   });
+    //   return res;
     } catch (err) {
       if (client) client.release();
       console.error(err);
