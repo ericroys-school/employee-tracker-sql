@@ -46,6 +46,14 @@ export const role = {
           : color.error(err)
       );
   },
+  getIdByName: async (title) => {
+    if(!title) return null; 
+    const query = {
+        text: `select id from role where title=($1);`,
+        values: [title],
+    };
+    return execute(query).then(({rowCount, rows}) => rowCount > 0 ? rows[0].id : null).catch(err => color.error(err));
+  },  
   getAll: async () => {
     const query = {
         text: 'select r.id as id, r.title as title, r.salary as salary, d.name as department from role r left join department d on r.dept_id = d.id',
