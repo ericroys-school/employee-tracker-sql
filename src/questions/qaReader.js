@@ -27,7 +27,7 @@ export async function getAnswers() {
         };
       }
       //do the action
-      if (QUESTIONS[i].action) QUESTIONS[i].action(response);
+      if (QUESTIONS[i].action) await QUESTIONS[i].action(response);
 
     //    console.log(`i=${i}, ${QUESTIONS[i].next}`);
       // this provides sequencing for skipping past the conditionals
