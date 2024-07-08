@@ -8,11 +8,16 @@ export const print = ({rows, fields}, sep, ...widths) => {
     const separator = sep ? sep : "\t";
     
     console.log();
-    console.log(fields.map((field, i) => field.name.padEnd(widths[i] || defWidth)).join(separator))
+    console.log(fields.map((field, i) => field.name.padEnd(widths[i] || defWidth, " ")).join(separator))
     console.log(fields.map((field, i) => "-".repeat(widths[i] || defWidth)).join(separator))
     console.log()
     rows.forEach(f => {
-        console.log(f.join("\t"));
+        let x = "";
+        f.forEach((r, i) => {
+            
+            x += r.padEnd(widths[i]||defWidth, " ") + "\t";
+        })
+        console.log(x);
     });
     console.log("\n\n")
    
