@@ -1,3 +1,4 @@
+import { color } from "../util/color.js";
 
 export const print = ({rows, fields}, sep, ...widths) => {
     if(!rows || !fields) return;
@@ -8,16 +9,16 @@ export const print = ({rows, fields}, sep, ...widths) => {
     const separator = sep ? sep : "\t";
     
     console.log();
-    console.log(fields.map((field, i) => field.name.padEnd(widths[i] || defWidth, " ")).join(separator))
-    console.log(fields.map((field, i) => "-".repeat(widths[i] || defWidth)).join(separator))
+    color.statistics(fields.map((field, i) => field.name.padEnd(widths[i] || defWidth, " ")).join(separator))
+    color.statistics(fields.map((field, i) => "-".repeat(widths[i] || defWidth)).join(separator))
     console.log()
     rows.forEach(f => {
         let x = "";
         f.forEach((r, i) => {
-            
-            x += r.padEnd(widths[i]||defWidth, " ") + "\t";
+            x += r ? r.padEnd(widths[i]||defWidth, " ") + separator
+            : "".padEnd(widths[i]||defWidth, " ") + separator
         })
-        console.log(x);
+        color.statistics(x);
     });
     console.log("\n\n")
    
