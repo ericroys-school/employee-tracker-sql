@@ -39,7 +39,10 @@ export const employee = {
   },
   getNames: async () => {
     const query = {
-      text: `select first_name || ' ' || last_name as fullname from employee`,
+      text: `select 
+      first_name || ' ' || last_name fullname 
+      from employee
+      order by fullname`,
       rowMode: "array",
     };
     const { rows } = await execute(query);
@@ -121,27 +124,26 @@ export const employee = {
     console.log(`\n\n${"*".repeat(3)} Employee by Manager ${"*".repeat(3)}`);
     print(res);
   },
-  getAll: async () => {
+  viewAll: async () => {
     const query = {
-      text: `select 
-        e.id as id, 
-        e.first_name as first, 
-        e.last_name as last, 
-        r.title as title, 
-        d.name as department, 
-        r.salary as salary, 
-        m.first_name || ' ' || m.last_name as manager 
-        
-        from employee e 
-            inner join role r on e.role_id = r.id 
-            inner join department d on r.dept_id = d.id
-            left join employee m on e.manager_id = m.id;`,
-      rowMode: "array",
-    };
-    return execute(query);
-  },
-  print: (header, queryResult) => {
-    console.log(`\n\n${"*".repeat(3)} ${header} ${"*".repeat(3)}`);
-    print(queryResult, null, 36, 20, 18, 20, 20, 10, 20);
+        text: `select 
+          e.id as id, 
+          e.last_name as last,
+          e.first_name as first, 
+          r.title as title, 
+          d.name as department, 
+          r.salary as salary, 
+          m.first_name || ' ' || m.last_name as manager 
+          
+          from employee e 
+              inner join role r on e.role_id = r.id 
+              inner join department d on r.dept_id = d.id
+              left join employee m on e.manager_id = m.id
+              order by e.last_name, e.first_name;`,
+        rowMode: "array",
+      }
+      const res = await execute(query);
+      console.log(`\n\n${"*".repeat(3)} View all Employees ${"*".repeat(3)}`);
+    print(res, null, 36, 20, 18, 20, 20, 10, 10);
   },
 };

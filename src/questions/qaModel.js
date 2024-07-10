@@ -236,8 +236,7 @@ export const QUESTIONS = {
     question: null,
     action: async () => {
       try {
-        const res = await employee.getAll();
-        employee.print(EMP_ALL, res);
+        await employee.viewAll()
       } catch (err) {
         color.error(err);
       }
