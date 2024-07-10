@@ -18,28 +18,6 @@ pool.on("error", (err, client) => {
   client.release();
 });
 
-/** Get a client from the pool */
-export async function connect() {
-  return await pool.connect();
-}
-
-export async function query(statement) {
-  let client;
-  try {
-    client = await connect();
-    client.query(statement, function (err, { rows }) {
-      console.log(err ? "Error: " + err : "No error");
-        return rows;
-    });
-  } catch (err) {
-    if (client) client.release();
-    console.error(err);
-    throw err;
-  } finally{
-    if(client) client.release();
-  }
-}
-
 /**
  * 
  * @param {
@@ -47,33 +25,7 @@ export async function query(statement) {
  * values
  * } query 
  */
-export async function execute(query) {
-    let client;
-    try {
-      client = await connect();
-
-      return client.query(query);
-    //   const res = client.query(query, function (err, res) {
-    //       console.log(err ? "Error: " + err : "No error");
-    //       //print(res, null);
-    //       r = res;
-    //   });
-    //   return res;
-    } catch (err) {
-      if (client) client.release();
-      console.error(err);
-      throw err;
-    }
+export function execute(query) {
+    return pool.query(query);
   }
 
-// `insert into department (name) values (${v});`;
-// `delete from department where id=${id};`;
-// `select id, name from department;``TODO - >Budget``insert into role (title, salary, dept_id) values (${title}, ${salary}, ${dept_id});`;
-// `delete from role where id=${id};`;
-// `select r.id as id, r.title as title, r.salary as salary, d.name as department from role r inner join department d on r.dept_id=d.id;`;
-// `insert into employee (first_name, last_name, role_id, manager_id)
-// values (${first}, ${last}, ${rid}, ${mid});`;
-// `delete from employee where id=${id};`;
-// `update employee set role_id=${rid} where id=${id};`;
-// `update employee set manager_id=${mid} where id=${id};`;
-// `select e.id as id, e.first_name as 'first name', e.last_name as 'last name', `;
