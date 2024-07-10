@@ -22,7 +22,7 @@ CREATE TABLE role (
     dept_id uuid NOT NULL,
     FOREIGN KEY (dept_id)
     REFERENCES department(id)
-    ON DELETE SET NULL
+    ON DELETE SET NULL 
 );
 
 /* Create Employee */
@@ -33,7 +33,7 @@ CREATE TABLE employee (
     role_id uuid NOT NULL,
     manager_id uuid,
     FOREIGN KEY (role_id)
-    REFERENCES role(id)
+    REFERENCES role(id),
     ON DELETE SET NULL,
     FOREIGN KEY (manager_id)
     REFERENCES employee(id)
