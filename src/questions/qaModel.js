@@ -337,7 +337,8 @@ export const QUESTIONS = {
     question: null,
     action: async () => {
         await department.viewBudget();
-    }
+    },
+    next: 1
   },
   //exit the program
   16: {
