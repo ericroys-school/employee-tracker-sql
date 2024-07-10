@@ -18,7 +18,7 @@ export const role = {
   },
   getNames: async () => {
     const query = {
-      text: "select title from role",
+      text: "select title from role order by title",
       rowMode: "array",
     };
     const { rows } = await execute(query);
@@ -47,7 +47,7 @@ export const role = {
       );
   },
   getIdByName: async (title) => {
-    if(!title) {console.log("title emmpty!"); return null}; 
+    if(!title)  return null; 
     const query = {
         text: `select id from role where title=($1);`,
         values: [title],
@@ -56,7 +56,14 @@ export const role = {
   },  
   getAll: async () => {
     const query = {
-        text: 'select r.id as id, r.title as title, r.salary as salary, d.name as department from role r left join department d on r.dept_id = d.id',
+        text: `select 
+        r.id as id, 
+        r.title as title, 
+        r.salary as salary, 
+        d.name as department 
+        from role r 
+          left join department d on r.dept_id = d.id
+        order by title`,
         rowMode: 'array'
     };
     return execute(query);

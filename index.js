@@ -1,18 +1,14 @@
-import { connect } from "./src/db/db.js";
+import { getAnswers } from "./src/questions/qaReader.js";
+import { color } from "./src/util/color.js";
 
-let client;
-try {
-  client = await connect();
-  console.log("Connected!!!");
-  // client.query(`select * from department`, (err, {rows}) => console.log(rows));
-  client.query("SELECT * FROM department", function (err, { rows }) {
-    console.log(err ? "Error: " + err : "No error");
-    console.log(rows);
-  });
-} catch (err) {
-  console.error(err);
-} finally {
-  if (client) client.release();
+console.clear();
+color.statistics(
+`${"*".repeat(50)}
 
-}
+\t\t Employee Manager
 
+ ${"*".repeat(50)}
+`);
+
+await getAnswers();
+console.log('Thanks for all the fish')

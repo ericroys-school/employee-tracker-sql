@@ -10,7 +10,7 @@ const pool = new Pool(
     host: process.env.PG_HOST,
     database: process.env.PG_DB,
   },
-  console.info(`Connected to [${process.env.PG_DB}] database`)
+  // console.info(`Connected to [${process.env.PG_DB}] database`)
 );
 
 pool.on("error", (err, client) => {

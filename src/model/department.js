@@ -33,18 +33,9 @@ export const department = {
     };
     return execute(query).then(({rowCount, rows}) => rowCount > 0 ? rows[0].id : null).catch(err => color.error(err));
   },
-
-  getAll: async () => {
-    const query = {
-      text: `select id, name from department;`,
-      values: [],
-      rowMode: "array",
-    };
-    return execute(query);
-  },
   getNames: async () => {
     const query = {
-      text: `select name from department`,
+      text: `select name from department order by name`,
       rowMode: "array",
     };
     const { rows } = await execute(query);
@@ -52,8 +43,27 @@ export const department = {
     rows.forEach((r) => x.push(r[0]));
     return x;
   },
-  print: (header, queryResult) => {
-    console.log(`\n\n${"*".repeat(3)} ${header} ${"*".repeat(3)}`);
-    print(queryResult, null, 36, 30);
+  viewAll: async () => {
+    const query = {
+      text: `select id, name from department order by name;`,
+      rowMode: 'array',
+    }
+    const res = await execute(query);
+    console.log(`\n\n${"*".repeat(3)} All Departments ${"*".repeat(3)}`);
+    print(res, null, 36, 30);
+  },
+  viewBudget: async () => {
+    const query = {
+      text: `select 
+      d.name,
+      sum(r.salary) Expenses
+      
+      from department d left join role r on d.id = r.dept_id 
+      group by d.name 
+      order by d.name;`,
+      rowMode: 'array'
+    };
+    const res = await execute(query);
+    print(res, null, 30, 20)
   },
 };

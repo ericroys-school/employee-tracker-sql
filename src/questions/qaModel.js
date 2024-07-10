@@ -20,7 +20,7 @@ const EMP_UPDATE_MGR = "Update Employee Manager";
 const EMP_ALL = "View All Employees";
 const EMP_BY_MGR = "View Employees by Manager";
 const EMP_BY_DEPT = "View Employees by Department";
-const QUIT = "quit";
+const QUIT = "-- Quit --";
 
 /** List options for the main menu */
 const menOpts = [
@@ -66,8 +66,7 @@ export const QUESTIONS = {
     question: null,
     action: async () => {
       try {
-        const res = await department.getAll();
-        department.print(DEPT_ALL, res);
+        await department.viewAll();
       } catch (err) {
         color.error(err);
       }
@@ -341,13 +340,13 @@ export const QUESTIONS = {
     }
   },
   //exit the program
-  42: {
-    condition: ({ mainChoice }) => mainChoice === "quit",
+  16: {
+    condition: ({ mainChoice }) => mainChoice === QUIT,
     question: null,
     action: null,
     next: -200,
   },
-  44: {
+  17: {
     condition: () => true,
     question: null,
     action: null,

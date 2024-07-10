@@ -41,4 +41,4 @@ export async function getAnswers() {
   return response;
 }
 
-getAnswers();
+// getAnswers();
