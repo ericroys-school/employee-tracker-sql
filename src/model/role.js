@@ -47,7 +47,7 @@ export const role = {
       );
   },
   getIdByName: async (title) => {
-    if(!title) return null; 
+    if(!title) {console.log("title emmpty!"); return null}; 
     const query = {
         text: `select id from role where title=($1);`,
         values: [title],
